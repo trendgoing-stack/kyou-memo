@@ -21,7 +21,10 @@ test('未完了は残りへ、完了は削除、記録を保存', () => {
   assert.deepEqual(r.leftovers.map((t) => t.id), ['a']);
   assert.equal(r.leftovers[0].originDate, '2026-10-05');
   assert.equal(r.tasks.length, 0);
-  assert.deepEqual(r.history['2026-10-05'], { total: 2, done: 1 });
+  assert.deepEqual(r.history['2026-10-05'], {
+    total: 2, done: 1,
+    tasks: [{ id: 'a', title: 'a', done: false }, { id: 'b', title: 'b', done: true }],
+  });
   assert.equal(r.meta.lastActiveDate, '2026-10-06');
 });
 

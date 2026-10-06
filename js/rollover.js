@@ -30,7 +30,12 @@ export function computeRollover(s, today) {
   if (last) {
     // 1. 前回アクティブだった日の記録
     if (tasks.length > 0) {
-      next.history[last] = { total: tasks.length, done: tasks.filter((t) => t.done).length };
+      next.history[last] = {
+        total: tasks.length,
+        done: tasks.filter((t) => t.done).length,
+        // 過去の日を振り返りで修正できるよう、直近30日分はタイトルと完了状態も残す
+        tasks: tasks.map((t) => ({ id: t.id, title: t.title, done: t.done })),
+      };
     }
     // 2,3. 未完了を「昨日の残り」へ（定型由来は破棄）。4. 完了済みは削除
     for (const t of tasks) {

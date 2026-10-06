@@ -1,6 +1,6 @@
 // Service Worker：アプリ本体をキャッシュファーストで返す。
 // VERSION を上げるとキャッシュ名が変わり、更新として検出される（js/version.js と同じ値にする）。
-const VERSION = '1.0.0';
+const VERSION = '1.1.0';
 const CACHE = `dailytodo-cache-v${VERSION}`;
 
 const PRECACHE = [

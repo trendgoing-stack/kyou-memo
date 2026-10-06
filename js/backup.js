@@ -87,10 +87,20 @@ export function parseImport(text) {
   if (d.history != null) {
     if (typeof d.history !== 'object' || Array.isArray(d.history)) fail('記録の形式が不正です');
     for (const [date, r] of Object.entries(d.history)) {
-      if (!DATE_RE.test(date) || !r || !Number.isInteger(r.total) || !Number.isInteger(r.done) || r.done < 0 || r.done > r.total) {
-        fail('記録の内容が不正です');
+      if (!DATE_RE.test(date) || !r || typeof r !== 'object') fail('記録の内容が不正です');
+      if (r.tasks != null) {
+        if (!Array.isArray(r.tasks) || r.tasks.length > MAX_TASKS) fail('記録のタスクが不正です');
+        const list = r.tasks.map((t) => {
+          if (!t || typeof t.id !== 'string' || !t.id || typeof t.title !== 'string' || !t.title.trim() || t.title.length > 100 || typeof t.done !== 'boolean') {
+            fail('記録のタスクが不正です');
+          }
+          return { id: t.id, title: t.title, done: t.done };
+        });
+        history[date] = { total: list.length, done: list.filter((t) => t.done).length, tasks: list };
+      } else {
+        if (!Number.isInteger(r.total) || !Number.isInteger(r.done) || r.done < 0 || r.done > r.total) fail('記録の内容が不正です');
+        history[date] = { total: r.total, done: r.done };
       }
-      history[date] = { total: r.total, done: r.done };
     }
   }
   const lastActiveDate = d.meta && d.meta.lastActiveDate;
