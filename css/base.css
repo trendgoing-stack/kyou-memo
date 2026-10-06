@@ -1,0 +1,70 @@
+:root {
+  --bg: #f2f2f7;
+  --card: #ffffff;
+  --text: #1c1c1e;
+  --sub: #6c6c70;
+  --line: #d8d8de;
+  --accent: #0a7a5a;
+  --accent-text: #ffffff;
+  --danger: #d70015;
+  --track: #dcdce2;
+  --overlay: rgba(0, 0, 0, 0.4);
+  --tabbar-h: 56px;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000000;
+    --card: #1c1c1e;
+    --text: #f2f2f7;
+    --sub: #9a9aa0;
+    --line: #38383a;
+    --accent: #4cc9a0;
+    --accent-text: #00120c;
+    --danger: #ff6b6b;
+    --track: #3a3a3c;
+    --overlay: rgba(0, 0, 0, 0.6);
+  }
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+html[data-font="large"] { font-size: 19px; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  line-height: 1.5;
+  overscroll-behavior-y: none;
+}
+
+body.scroll-locked {
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+#view {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: calc(12px + env(safe-area-inset-top)) 16px calc(var(--tabbar-h) + 32px + env(safe-area-inset-bottom));
+  outline: none;
+}
+
+button, input, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* iOS の自動ズーム防止：入力欄は 16px 以上 */
+input, textarea, select { font-size: max(16px, 1rem); }
+
+button { cursor: pointer; }
